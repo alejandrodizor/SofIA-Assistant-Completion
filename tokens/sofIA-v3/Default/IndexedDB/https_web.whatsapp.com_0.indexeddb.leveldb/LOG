@@ -1,0 +1,33 @@
+2023/06/21-23:59:09.830 a803 Creating DB /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v3/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb since it was missing.
+2023/06/21-23:59:09.840 a803 Reusing MANIFEST /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v3/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/21-23:59:11.026 9503 Level-0 table #5: started
+2023/06/21-23:59:11.029 9503 Level-0 table #5: 20361 bytes OK
+2023/06/21-23:59:11.034 9503 Delete type=0 #3
+2023/06/21-23:59:11.034 a803 Manual compaction at level-0 from '\x00\x06\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x07\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/06/22-17:00:08.933 a403 Level-0 table #7: started
+2023/06/22-17:00:08.966 a403 Level-0 table #7: 1075899 bytes OK
+2023/06/22-17:00:08.974 a403 Delete type=0 #4
+2023/06/22-17:03:40.350 a403 Compacting 1@1 + 1@2 files
+2023/06/22-17:03:40.381 a403 Generated table #8@1: 15617 keys, 486102 bytes
+2023/06/22-17:03:40.381 a403 Compacted 1@1 + 1@2 files => 486102 bytes
+2023/06/22-17:03:40.388 a403 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/06/22-17:03:40.388 a403 Delete type=2 #7
+2023/06/22-17:03:40.388 a403 Delete type=2 #5
+2023/06/23-05:33:23.679 a403 Level-0 table #10: started
+2023/06/23-05:33:23.712 a403 Level-0 table #10: 1173915 bytes OK
+2023/06/23-05:33:23.720 a403 Delete type=0 #6
+2023/06/23-05:49:03.556 a403 Compacting 1@1 + 1@2 files
+2023/06/23-05:49:03.591 a403 Generated table #11@1: 25380 keys, 761616 bytes
+2023/06/23-05:49:03.591 a403 Compacted 1@1 + 1@2 files => 761616 bytes
+2023/06/23-05:49:03.596 a403 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/06/23-05:49:03.597 a403 Delete type=2 #10
+2023/06/23-05:49:03.597 a403 Delete type=2 #8
+2023/06/24-04:35:29.864 a403 Level-0 table #13: started
+2023/06/24-04:35:29.888 a403 Level-0 table #13: 1216395 bytes OK
+2023/06/24-04:35:29.896 a403 Delete type=0 #9
+2023/06/24-04:39:02.462 a403 Compacting 1@1 + 1@2 files
+2023/06/24-04:39:02.502 a403 Generated table #14@1: 31949 keys, 909796 bytes
+2023/06/24-04:39:02.502 a403 Compacted 1@1 + 1@2 files => 909796 bytes
+2023/06/24-04:39:02.508 a403 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/06/24-04:39:02.509 a403 Delete type=2 #13
+2023/06/24-04:39:02.509 a403 Delete type=2 #11

@@ -1,0 +1,21 @@
+2023/06/24-17:34:29.866 a603 Reusing MANIFEST /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v4/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/24-17:34:29.867 a603 Recovering log #46
+2023/06/24-17:34:29.908 a603 Reusing old log /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v4/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000046.log 
+2023/06/24-17:34:41.120 a603 Level-0 table #51: started
+2023/06/24-17:34:41.146 a603 Level-0 table #51: 1195102 bytes OK
+2023/06/24-17:34:41.154 a603 Delete type=0 #46
+2023/06/24-17:34:41.159 9303 Compacting 1@1 + 1@2 files
+2023/06/24-17:34:41.210 9303 Generated table #52@1: 64787 keys, 2156746 bytes
+2023/06/24-17:34:41.210 9303 Compacted 1@1 + 1@2 files => 2156746 bytes
+2023/06/24-17:34:41.218 9303 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/06/24-17:34:41.218 9303 Delete type=2 #48
+2023/06/24-17:34:41.220 9303 Delete type=2 #51
+2023/06/24-18:20:40.465 a603 Level-0 table #54: started
+2023/06/24-18:20:40.510 a603 Level-0 table #54: 1085744 bytes OK
+2023/06/24-18:20:40.518 a603 Delete type=0 #50
+2023/06/24-18:20:42.685 a603 Compacting 1@1 + 1@2 files
+2023/06/24-18:20:42.739 a603 Generated table #55@1: 67122 keys, 2260884 bytes
+2023/06/24-18:20:42.740 a603 Compacted 1@1 + 1@2 files => 2260884 bytes
+2023/06/24-18:20:42.746 a603 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/06/24-18:20:42.746 a603 Delete type=2 #54
+2023/06/24-18:20:42.746 a603 Delete type=2 #52

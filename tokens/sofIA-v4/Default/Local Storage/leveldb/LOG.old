@@ -1,0 +1,9 @@
+2023/06/21-18:22:37.238 a903 Reusing MANIFEST /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v4/Default/Local Storage/leveldb/MANIFEST-000001
+2023/06/21-18:22:37.238 a903 Recovering log #3
+2023/06/21-18:22:37.239 a903 Reusing old log /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v4/Default/Local Storage/leveldb/000003.log 
+2023/06/21-21:47:45.741 a703 Level-0 table #5: started
+2023/06/21-21:47:45.747 a703 Level-0 table #5: 12683 bytes OK
+2023/06/21-21:47:45.754 a703 Delete type=0 #3
+2023/06/24-02:26:52.733 a703 Level-0 table #7: started
+2023/06/24-02:26:52.740 a703 Level-0 table #7: 9074 bytes OK
+2023/06/24-02:26:52.749 a703 Delete type=0 #4
