@@ -1,11 +1,12 @@
 const path = require("path");
 const dotenv = require("dotenv");
 
-const envPath = path.resolve(process.cwd(), "../.env");
+const envPath = path.resolve(process.cwd(), '.env');
 dotenv.config({ path: envPath });
 
 const { Configuration, OpenAIApi } = require("openai");
 const { worker } = require("../../controllers/function-worker");
+const { functions } = require("../../controllers/functions");
 //const { getLastMessages, pushMessage } = require("../utils/database");
 
 const configuration = new Configuration({
@@ -13,6 +14,7 @@ const configuration = new Configuration({
 });
 
 const openai = new OpenAIApi(configuration);
+
 
 async function chatGPT(message, client) {
   try {
@@ -39,40 +41,7 @@ async function chatGPT(message, client) {
       model: "gpt-3.5-turbo-0613",
       messages: history,
       max_tokens: 500,
-      temperature: 0.7,
-      presence_penalty: 0,
-      functions: [
-        {
-          name: "limpiar_historial",
-          description: "Limpia el historial de un chat.",
-          parameters: {
-            type: "object",
-            properties: {
-              chat: {
-                type: "number",
-                description: "numero del chat a limpiar",
-              },
-            },
-          },
-        },
-        {
-          name: "enviar_mensaje",
-          description: "Envia un mensaje a un chat.",
-          parameters: {
-            type: "object",
-            properties: {
-              mensaje: {
-                type: "string",
-                description: "mensaje a enviar",
-              },
-              destinatario: {
-                type: "string",
-                description: "nombre o numero de la persona a la que se le enviara el mensaje",
-              },
-            },
-          },
-        },
-      ],
+      functions: functions,
     });
 
     let response_message = response["data"]["choices"][0]["message"];
@@ -88,7 +57,7 @@ async function chatGPT(message, client) {
       worker(function_name, arguments, client);
 
       let function_response =
-        "Se ha enviado correctamenete el mensaje.";
+        "Se ha enviado correctamente el mensaje.";
 
       history.push({
         role: "function",

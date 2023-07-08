@@ -10,6 +10,11 @@ function worker(function_name, args, client) {
 
 // funcion que envia un mensaje a un chat
 function send_message(mensaje, destinatario, client) {
+
+  if (destinatario === undefined || destinatario === "") {
+    destinatario = "esposa";
+  }
+
   let phone = destinatario.toLowerCase();
 
   if (
