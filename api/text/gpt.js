@@ -9,7 +9,7 @@ const { worker } = require("../../controllers/function-worker");
 //const { getLastMessages, pushMessage } = require("../utils/database");
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
