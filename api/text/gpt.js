@@ -14,7 +14,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-async function chatGPT(message) {
+async function chatGPT(message, client) {
   try {
     // const model = settings.settings.model;
     //const max_tokens = settings.settings.maxTokens;
@@ -85,10 +85,10 @@ async function chatGPT(message) {
       let arguments = JSON.parse(response_message.function_call.arguments);
 
       // execute function
-      worker(function_name, arguments);
+      worker(function_name, arguments, client);
 
       let function_response =
-        "Se ha limpiado correctamente el historial del chat";
+        "Se ha enviado correctamenete el mensaje.";
 
       history.push({
         role: "function",

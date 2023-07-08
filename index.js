@@ -15,9 +15,11 @@ wppconnect
 
 function start(client) {
   client.onMessage((message) => {
-    if (message.body === "Hello") {
+
+    console.log("numero del sender",message.from);
+    if (message.body === "🗑️") {
       client
-        .sendText(message.from, "Hello, how I may help you?")
+        .sendText(message.from, "Se ha limpiado el chat")
         .then((result) => {
           //return object success
         })
@@ -26,7 +28,7 @@ function start(client) {
         });
     }
 
-    chatGPT(message.body).then((response) => {
+    chatGPT(message.body, client).then((response) => {
       if (response.is_function) {
         client
           .sendText(

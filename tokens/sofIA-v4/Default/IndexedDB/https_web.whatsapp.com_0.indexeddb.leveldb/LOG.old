@@ -1,48 +1,14 @@
-2023/06/21-18:22:38.518 a703 Reusing MANIFEST /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v4/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/06/21-18:22:38.519 a703 Recovering log #30
-2023/06/21-18:22:38.537 a703 Reusing old log /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v4/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000030.log 
-2023/06/21-18:49:35.239 9803 Level-0 table #35: started
-2023/06/21-18:49:35.270 9803 Level-0 table #35: 1190072 bytes OK
-2023/06/21-18:49:35.276 9803 Delete type=0 #30
-2023/06/21-18:49:35.919 a703 Compacting 1@1 + 1@2 files
-2023/06/21-18:49:35.979 a703 Generated table #36@1: 47759 keys, 1722797 bytes
-2023/06/21-18:49:35.979 a703 Compacted 1@1 + 1@2 files => 1722797 bytes
-2023/06/21-18:49:35.983 a703 compacted to: files[ 0 0 1 0 0 0 0 ]
-2023/06/21-18:49:35.984 a703 Delete type=2 #35
-2023/06/21-18:49:35.984 a703 Delete type=2 #32
-2023/06/22-03:58:00.052 a703 Level-0 table #38: started
-2023/06/22-03:58:00.085 a703 Level-0 table #38: 1317298 bytes OK
-2023/06/22-03:58:00.091 a703 Delete type=0 #34
-2023/06/22-04:15:37.840 a703 Compacting 1@1 + 1@2 files
-2023/06/22-04:15:37.900 a703 Generated table #39@1: 50991 keys, 1834445 bytes
-2023/06/22-04:15:37.900 a703 Compacted 1@1 + 1@2 files => 1834445 bytes
-2023/06/22-04:15:37.905 a703 compacted to: files[ 0 0 1 0 0 0 0 ]
-2023/06/22-04:15:37.905 a703 Delete type=2 #38
-2023/06/22-04:15:37.906 a703 Delete type=2 #36
-2023/06/22-15:53:23.067 a703 Level-0 table #41: started
-2023/06/22-15:53:23.101 a703 Level-0 table #41: 1194443 bytes OK
-2023/06/22-15:53:23.110 a703 Delete type=0 #37
-2023/06/22-15:58:23.080 a703 Compacting 1@1 + 1@2 files
-2023/06/22-15:58:23.146 a703 Generated table #42@1: 54216 keys, 1871492 bytes
-2023/06/22-15:58:23.146 a703 Compacted 1@1 + 1@2 files => 1871492 bytes
-2023/06/22-15:58:23.152 a703 compacted to: files[ 0 0 1 0 0 0 0 ]
-2023/06/22-15:58:23.152 a703 Delete type=2 #39
-2023/06/22-15:58:23.152 a703 Delete type=2 #41
-2023/06/23-07:40:21.738 a703 Level-0 table #44: started
-2023/06/23-07:40:21.798 a703 Level-0 table #44: 1263762 bytes OK
-2023/06/23-07:40:21.804 a703 Delete type=0 #40
-2023/06/23-08:12:56.595 a703 Compacting 1@1 + 1@2 files
-2023/06/23-08:12:56.657 a703 Generated table #45@1: 57394 keys, 1960975 bytes
-2023/06/23-08:12:56.657 a703 Compacted 1@1 + 1@2 files => 1960975 bytes
-2023/06/23-08:12:56.663 a703 compacted to: files[ 0 0 1 0 0 0 0 ]
-2023/06/23-08:12:56.664 a703 Delete type=2 #42
-2023/06/23-08:12:56.664 a703 Delete type=2 #44
-2023/06/24-02:45:27.167 a703 Level-0 table #47: started
-2023/06/24-02:45:27.205 a703 Level-0 table #47: 1180917 bytes OK
-2023/06/24-02:45:27.212 a703 Delete type=0 #43
-2023/06/24-02:45:27.712 a703 Compacting 1@1 + 1@2 files
-2023/06/24-02:45:27.770 a703 Generated table #48@1: 60976 keys, 2049015 bytes
-2023/06/24-02:45:27.770 a703 Compacted 1@1 + 1@2 files => 2049015 bytes
-2023/06/24-02:45:27.774 a703 compacted to: files[ 0 0 1 0 0 0 0 ]
-2023/06/24-02:45:27.774 a703 Delete type=2 #45
-2023/06/24-02:45:27.774 a703 Delete type=2 #47
+2023/06/25-01:18:11.302 6707 Reusing MANIFEST /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v4/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/25-01:18:11.302 6707 Recovering log #57
+2023/06/25-01:18:11.337 6707 Reusing old log /Users/alejandrodizor/Documents/Dizor/Devs/ai/sofIA-assistant/tokens/sofIA-v4/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000057.log 
+2023/06/25-01:18:22.626 8303 Level-0 table #63: started
+2023/06/25-01:18:22.647 8303 Level-0 table #63: 1179273 bytes OK
+2023/06/25-01:18:22.652 8303 Delete type=0 #57
+2023/06/25-01:18:22.655 8303 Compacting 1@1 + 2@2 files
+2023/06/25-01:18:22.706 8303 Generated table #64@1: 64122 keys, 2268860 bytes
+2023/06/25-01:18:22.716 8303 Generated table #65@1: 11517 keys, 282300 bytes
+2023/06/25-01:18:22.716 8303 Compacted 1@1 + 2@2 files => 2551160 bytes
+2023/06/25-01:18:22.722 8303 compacted to: files[ 0 0 2 0 0 0 0 ]
+2023/06/25-01:18:22.722 8303 Delete type=2 #63
+2023/06/25-01:18:22.722 8303 Delete type=2 #60
+2023/06/25-01:18:22.722 8303 Delete type=2 #59
