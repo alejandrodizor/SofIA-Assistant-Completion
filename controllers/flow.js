@@ -1,10 +1,31 @@
 const { chatGPT } = require("../api/text/gpt");
+const authentication = require("./auth");
 
 function flow(client) {
-  client.onMessage((message) => {
-    client.setChatState(message.from, 0);
+  client.onMessage(async (message) => {
+    /**
+     ** Authentication
+     */
 
-    console.log("mensaje del sender", message);
+    let auth = await authentication(message);
+
+    if (auth.success === false) {
+      client.sendText(message.from, auth.message);
+      return;
+    }
+
+    /*
+    client.onAck((ack) => {
+       console.log('ACK:  ',ack);
+       if (ack === 3) {
+         client.sendSeen(message.from);
+       }
+     });*/
+
+    /**
+     ** State: Typing
+     */
+    client.setChatState(message.from, 0);
 
     if (message.type === "chat") {
       if (message.body === "🗑️") {
@@ -30,7 +51,7 @@ function flow(client) {
         return;
       }
 
-      chatGPT(message.body, client).then((response) => {
+      chatGPT(message.body, message.from, auth.userSettings, client).then((response) => {
         if (response.is_function) {
           client
             .sendText(

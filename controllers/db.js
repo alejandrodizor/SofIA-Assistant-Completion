@@ -61,7 +61,12 @@ async function newUser(user) {
       return { new: false, userSettings: data };
     } else {
       let newChats = {
-        chats: [],
+        chats: [
+          {
+            id: 1,
+            messages: [],
+          },
+        ],
       };
 
       const userSettings = require("../schemas/userSettings.json");
@@ -141,4 +146,5 @@ module.exports = {
   newUser,
   isUserInWhiteList,
   getLastMessages,
+  pushMessage,
 };
