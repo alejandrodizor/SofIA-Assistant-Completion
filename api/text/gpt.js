@@ -22,7 +22,7 @@ async function chatGPT(message, user, settings, client) {
     let history = await getLastMessages(user);
 
     history.push({ role: "user", content: message });
-    pushMessage(user, { role: "user", content: message });
+    
 
     const response = await openai.createChatCompletion({
       model: model,
@@ -33,6 +33,12 @@ async function chatGPT(message, user, settings, client) {
 
     let response_message = response["data"]["choices"][0]["message"];
 
+    if (response_message.length < 1) {
+      return false;
+    } else {
+      await pushMessage(user, { role: "user", content: message });
+    }
+
     if (
       response_message.hasOwnProperty("function_call") &&
       response_message.function_call !== null
@@ -41,9 +47,13 @@ async function chatGPT(message, user, settings, client) {
       let arguments = JSON.parse(response_message.function_call.arguments);
 
       // execute function
-      worker(function_name, arguments, client);
+      
 
-      let function_response = "Se ha enviado correctamente el mensaje.";
+      let function_response = await worker(function_name, arguments, client);
+
+      if(function_response === undefined){
+        function_response = "Hubo un error al ejecutar la función"
+      }
 
       history.push({
         role: "function",
@@ -58,7 +68,7 @@ async function chatGPT(message, user, settings, client) {
       });
 
       const second_response = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo-0613",
+        model: model,
         messages: history,
       });
 
