@@ -16,6 +16,17 @@ async function authentication(ctx) {
     const globalSettings = await getGlobalSettings();
 
     /**
+     ** Admin validation
+     */
+    if (ctx.from === globalSettings.admin + "@c.us") {
+      const { userSettings } = await newUser(ctx.from);
+      response.success = true;
+      response.message = "Success";
+      response.userSettings = userSettings;
+      return response;
+    }
+
+    /**
      ** Production validation
      */
 
@@ -35,7 +46,7 @@ async function authentication(ctx) {
     if (!isInWhiteList) {
       response.success = false;
       response.message =
-        "Lo siento 😓, actualmente solo me encuetro disponible por medio de invitación ✉️.";
+        "Lo siento 😓, solo me encuetro disponible por medio de invitación ✉️.";
       return response;
     }
 

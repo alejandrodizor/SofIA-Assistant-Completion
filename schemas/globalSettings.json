@@ -1,7 +1,7 @@
 {
     "settings": {
       "admin": "573186312380",
-      "production": true,
+      "production": false,
       "beta": true,
       "debug": true,
       "qr": false,

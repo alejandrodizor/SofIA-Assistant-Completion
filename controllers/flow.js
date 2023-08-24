@@ -29,14 +29,35 @@ function flow(client) {
 
     if (message.type === "chat") {
       if (message.body === "🗑️") {
-        client
+        client.sendText(message.from, 'WPPConnect message with buttons', {
+          useTemplateButtons: true, // False for legacy
+          buttons: [
+            {
+              url: 'https://wppconnect.io/',
+              text: 'WPPConnect Site'
+            },
+            {
+              phoneNumber: '+55 11 22334455',
+              text: 'Call me'
+            },
+            {
+              id: 'your custom id 1',
+              text: 'Some text'
+            },
+            {
+              id: 'another id 2',
+              text: 'Another text'
+            }
+          ] // Optional
+       });
+        /*client
           .sendText(message.from, "Se ha limpiado el chat")
           .then((result) => {
             //return object success
           })
           .catch((erro) => {
             console.error("Error when sending: ", erro); //return object error
-          });
+          });*/
         client.setChatState(message.from, 2);
         return;
       }
