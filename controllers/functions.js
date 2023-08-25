@@ -12,7 +12,7 @@ const functions = [
           },
         },
       },
-      {
+      /*{
         name: "enviar_mensaje",
         description: "Envia un mensaje a un chat.",
         parameters: {
@@ -28,7 +28,7 @@ const functions = [
             },
           },
         },
-      },
+      },*/
 ]
 
 module.exports = { functions }

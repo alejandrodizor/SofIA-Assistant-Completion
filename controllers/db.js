@@ -18,6 +18,46 @@ async function getData(key) {
   return await redis.get(key);
 }
 
+async function pushMessage(user, message) {
+  try {
+    const settingsData = await getData(`${user}-settings`);
+    const settings = settingsData.settings;
+
+    const chatId = settings.currentChat;
+
+    try {
+      const chatsData = await getData(`${user}-chats`);
+
+      let jsonData = chatsData.chats;
+
+      // Encuentra el chat en el arreglo de chats utilizando find
+
+      const targetChat = jsonData.find((chat) => chat.id === chatId);
+
+      // Agrega el nuevo mensaje al arreglo de mensajes del chat encontrado
+
+      if (targetChat) {
+        if (targetChat.messages.length >= 20) {
+          targetChat.messages.shift();
+
+          targetChat.messages.push(message);
+        } else {
+          targetChat.messages.push(message);
+        }
+      } else {
+        console.log(`No se encontró el chat con id ${chatId}`);
+      }
+
+      return await setData(`${user}-chats`, { chats: jsonData });
+    } catch (err) {
+      console.log(err);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
 
 async function pushMessage(user, message) {
     try {
@@ -139,6 +179,42 @@ async function getLastMessages(user) {
   }
 }
 
+async function clearChat(user) {
+  try {
+    const settingsData = await getData(`${user}-settings`);
+    const settings = settingsData.settings;
+
+    const chatId = settings.currentChat;
+
+    const chatsData = await getData(`${user}-chats`);
+    const chats = chatsData.chats;
+
+    const targetChat = chats.find((chat) => chat.id === chatId);
+
+    targetChat.messages = [];
+
+    return await setData(`${user}-chats`, chatsData);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function clearAllChats(user) {
+  try {
+    user.forEach((user) => {
+      clearChat(user);
+    });
+
+    return true;
+  } catch (error) {
+    console.log(error);
+
+    return error;
+  }
+}
+
+
+
 module.exports = {
   setData,
   getData,
@@ -147,4 +223,5 @@ module.exports = {
   isUserInWhiteList,
   getLastMessages,
   pushMessage,
+  clearAllChats,
 };
