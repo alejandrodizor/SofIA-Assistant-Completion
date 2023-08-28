@@ -1,5 +1,10 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const axios = require('axios');
+const path = require("path");
+const dotenv = require("dotenv");
+
+const envPath = path.resolve(process.cwd(), ".env");
+dotenv.config({ path: envPath });
 
 async function textToSpeech(inputText, language='es-CO', genre='FEMALE', providers='microsoft') {
   const resp = await fetch(
@@ -8,7 +13,7 @@ async function textToSpeech(inputText, language='es-CO', genre='FEMALE', provide
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiODZhYjcyZjQtNzM5OC00NDQ1LWIyOWUtNmJhY2VmMjBlYTA4IiwidHlwZSI6ImFwaV90b2tlbiJ9.litYXbvE8LvvCOhfby4meOB3WP1PQ_edicQEZ5LNKrc'
+        Authorization: 'Bearer process.env.EDEN_API_KEY'
       },
       body: JSON.stringify({
         providers: providers,

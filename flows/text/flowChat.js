@@ -1,23 +1,14 @@
 const { chatGPT } = require("../../api/text/gpt");
+const { functionClearChat } = require("../../functions/clearChat");
+
 
 function flowChat(message, userSettings, client) {
+
+  /**
+   ** Function: Clear Chat
+   */
   if (message.body === "🗑️") {
-
-    
-    client
-      .sendText(message.from, "Se ha limpiado el chat")
-      .then((result) => {
-        //return object success
-      })
-      .catch((erro) => {
-        console.error("Error when sending: ", erro); //return object error
-      });
-
-    /**
-     *? State: Clear
-     */
-    client.setChatState(message.from, 2);
-    return;
+    return functionClearChat(message, userSettings, client);
   }
 
   if (message.body === "creador") {
@@ -30,7 +21,7 @@ function flowChat(message, userSettings, client) {
     return;
   }
 
-  chatGPT(message.body, message.from, userSettings, client).then((response) => {
+  chatGPT(message, userSettings, client).then((response) => {
     if (response.is_function) {
       client
         .sendText(
