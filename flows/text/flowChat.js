@@ -1,9 +1,8 @@
 const { chatGPT } = require("../../api/text/gpt");
 const { functionClearChat } = require("../../functions/clearChat");
 
-
 function flowChat(message, userSettings, client) {
-
+  try {
   /**
    ** Function: Clear Chat
    */
@@ -22,21 +21,10 @@ function flowChat(message, userSettings, client) {
   }
 
   chatGPT(message, userSettings, client).then((response) => {
-    if (response.is_function) {
-      client
-        .sendText(
-          message.from,
-          `🚀 Ejecutando función: ${response.function_name} con los 
-              argumentos ${JSON.stringify(response.arguments)}`
-        )
-        .catch((error) => {
-          console.error("Error when sending: ", error); //return object error
-        });
-    } else {
-      client.sendText(message.from, response.message).catch((error) => {
-        console.error("Error when sending: ", error); //return object error
-      });
-    }
+    client.sendText(message.from, response.message).catch((error) => {
+      console.error("Error when sending: ", error); //return object error
+    });
+
     /**
      *? State: Clear
      */
@@ -44,6 +32,10 @@ function flowChat(message, userSettings, client) {
   });
 
   return;
+
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = { flowChat };

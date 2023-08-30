@@ -7,7 +7,7 @@ async function worker(message, userSettings, function_name, args, client) {
    /**
    ** Function: Clear Chat
    */
-  if (function_name === "clear_chat") {
+  if (function_name === "eliminar_chat") {
     return await functionClearChat(message, userSettings, client, true);
   }
 }

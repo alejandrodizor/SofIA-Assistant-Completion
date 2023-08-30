@@ -1,7 +1,7 @@
 const functions = [
   {
-    name: "clear_chat",
-    description: "Limpia el chat de un usuario.",
+    name: "eliminar_chat",
+    description: "Limpia o eliminar el chat o el historial de un usuario.",
     parameters: {
       type: "object",
       properties: {

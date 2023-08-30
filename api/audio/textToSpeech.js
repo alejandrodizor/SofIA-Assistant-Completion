@@ -13,7 +13,7 @@ async function textToSpeech(inputText, language='es-CO', genre='FEMALE', provide
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer process.env.EDEN_API_KEY'
+        Authorization: `Bearer ${process.env.EDEN_API_KEY}`
       },
       body: JSON.stringify({
         providers: providers,

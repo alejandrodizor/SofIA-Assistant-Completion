@@ -6,7 +6,7 @@ async function functionClearChat(
   client,
   is_function = false
 ) {
-  let response = "He limpiado el chat correctamente.";
+  let response = "¡Chat eliminado! 👍";
   await clearChat(message.from, userSettings)
     .then(() => {
       if (!is_function) {
@@ -20,10 +20,6 @@ async function functionClearChat(
       response = "Hubo un error al limpiar el chat.";
     });
 
-  /**
-   *? State: Clear
-   */
-  client.setChatState(message.from, 2);
   return response;
 }
 
