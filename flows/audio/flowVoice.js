@@ -34,8 +34,7 @@ async function flowVoice(message, userSettings, client) {
               client.sendPttFromBase64(
                 message.from,
                 responeTextToSpeech.microsoft.audio,
-                "Mensaje de SofIA",
-                response.message
+                "Mensaje de SofIA"
               );
             } else {
               client.sendText(message.from, response.message).catch((error) => {
