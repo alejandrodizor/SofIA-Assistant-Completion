@@ -17,10 +17,12 @@ async function flowAudio(message, userSettings, client) {
     /**
      ** Downloading audio
      */
-
     const conversionResult = await downloadAudio(message, client);
 
     if (conversionResult.success) {
+      /**
+       ** Transcribe audio
+       **/
       transcribeAudio(conversionResult.fileMP3Path).then((response) => {
         if (response.success) {
           whisperResponse = response.response.text;

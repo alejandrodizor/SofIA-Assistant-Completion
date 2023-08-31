@@ -12,6 +12,19 @@ const functions = [
       },
     },
   },
+  {
+    name: "crear_imagen",
+    description: "Crea o dibuja una imagen a partir de un texto.",
+    parameters: {
+      type: "object",
+      properties: {
+        description: {
+          type: "string",
+          description: "Palabra o frase a dibujar",
+        },
+      },
+    },
+  },
   /*{
     name: "enviar_mensaje",
     description: "Envia un mensaje a un chat.",

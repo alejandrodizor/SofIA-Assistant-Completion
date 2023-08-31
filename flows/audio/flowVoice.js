@@ -25,21 +25,25 @@ async function flowVoice(message, userSettings, client) {
           };
 
           chatGPT(msg, userSettings, client).then(async (response) => {
-            if (userSettings.settings.voiceAnnouncements) {
-              const responeTextToSpeech = await textToSpeech(
-                response.message,
-                userSettings.settings.language
-              );
+            if (!response.is_function) {
+              if (userSettings.settings.voiceAnnouncements) {
+                const responeTextToSpeech = await textToSpeech(
+                  response.message,
+                  userSettings.settings.language
+                );
 
-              client.sendPttFromBase64(
-                message.from,
-                responeTextToSpeech.microsoft.audio,
-                "Mensaje de SofIA"
-              );
-            } else {
-              client.sendText(message.from, response.message).catch((error) => {
-                console.error("Error when sending: ", error); //return object error
-              });
+                client.sendPttFromBase64(
+                  message.from,
+                  responeTextToSpeech.microsoft.audio,
+                  "Mensaje de SofIA"
+                );
+              } else {
+                client
+                  .sendText(message.from, response.message)
+                  .catch((error) => {
+                    console.error("Error when sending: ", error); //return object error
+                  });
+              }
             }
 
             /**
