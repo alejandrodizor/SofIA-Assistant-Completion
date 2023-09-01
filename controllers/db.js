@@ -179,6 +179,30 @@ async function clearAllChats(user) {
   }
 }
 
+async function changeName(user, userSettings, name) {
+  try {
+    const settingsData = userSettings;
+    settingsData.settings.name = name;
+
+    let tuning = [
+      {
+        role: "user",
+        content: `Quiero que de ahora en adelante siempre te refieras a mí como ${name}`,
+      },
+      {
+        role: "assistant",
+        content: `¡Claro ${name}! Te llamaré ${name} de ahora en adelante. ¿En qué puedo ayudarte hoy ${name}?`,
+      },
+    ];
+
+    settingsData.settings.tuning = tuning;
+
+    return await setData(`${user}-settings`, settingsData);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 
 module.exports = {
@@ -191,4 +215,5 @@ module.exports = {
   pushMessage,
   clearAllChats,
   clearChat,
+  changeName
 };

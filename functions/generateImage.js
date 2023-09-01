@@ -17,14 +17,14 @@ async function functionGenerateImage(
     );
 
     if (response === "Error") {
-      return {success:false, response: "Hubo un error al generar la imagen.", showMessage: false};
+      return {success:false, response: "Hubo un error al generar la imagen.", showMessage: false, saveMessage: true};
     }
 
-    return {success:true, response, showMessage: false};
+    return {success:true, response, showMessage: false, saveMessage: true};
   } catch (error) {
     console.log(error);
-    return "Hubo un error al generar la imagen.";
-  }
+    return {success:false, response: "Hubo un error al generar la imagen.", showMessage: false, saveMessage: true};
+}
 }
 
 module.exports = { functionGenerateImage };

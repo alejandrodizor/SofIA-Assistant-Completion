@@ -22,7 +22,7 @@ async function functionClearChat(
       success = false;
     });
 
-  return {success, response, showMessage: true};
+  return {success, response, showMessage: true, saveMessage: true};
 }
 
 module.exports = { functionClearChat };

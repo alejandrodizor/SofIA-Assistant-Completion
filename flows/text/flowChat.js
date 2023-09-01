@@ -18,6 +18,14 @@ function flowChat(message, userSettings, client) {
       return flowGenerateImage(message, userSettings, client);
     }
 
+
+    /**
+     ** Flow: Generate Image
+     */
+    if (message.body.startsWith("🌳")) {
+      return flowGenerateImage(message, userSettings, client);
+    }
+
     /**
      ** Flow: GPT
      */

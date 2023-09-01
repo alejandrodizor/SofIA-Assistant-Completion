@@ -49,11 +49,20 @@ async function chatGPT(msg, settings, client) {
 
       // execute function
 
-      let function_response = await worker(msg, settings, function_name, arguments, client);
+      let function_response = await worker(
+        msg,
+        settings,
+        function_name,
+        arguments,
+        client
+      );
 
       if (!function_response.success) {
         function_response.response = "Hubo un error al ejecutar la función";
-        console.log("Hubo un error al ejecutar la función", function_response.response);
+        console.log(
+          "Hubo un error al ejecutar la función",
+          function_response.response
+        );
       }
 
       console.log("function_response", function_response);
@@ -74,7 +83,7 @@ async function chatGPT(msg, settings, client) {
         settings
       );
 
-      if (!function_response.showMessage) {
+      if (function_response.saveMessage) {
         await pushMessage(
           user,
           {
@@ -83,12 +92,15 @@ async function chatGPT(msg, settings, client) {
           },
           settings
         );
+      }
+
+      if (!function_response.showMessage) {
         return {
           is_function: true,
           function_name: null,
           arguments: null,
           message: function_response.response,
-        }
+        };
       }
 
       const second_response = await openai.createChatCompletion({
@@ -98,8 +110,6 @@ async function chatGPT(msg, settings, client) {
 
       let second_response_message =
         second_response["data"]["choices"][0]["message"];
-
- 
 
       return {
         is_function: false,

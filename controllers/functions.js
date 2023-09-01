@@ -23,26 +23,25 @@ const functions = [
           description: "Palabra o frase a dibujar",
         },
       },
+      required: ["description"],
     },
   },
-  /*{
-    name: "enviar_mensaje",
-    description: "Envia un mensaje a un chat.",
+  {
+    name: "recordar_nombre",
+    description:
+      "Cada vez que el usuario dice su nombre, se recuerda el nombre del usuario para llamarlo por su nombre",
     parameters: {
       type: "object",
       properties: {
-        mensaje: {
-          type: "string",
-          description: "mensaje a enviar",
-        },
-        destinatario: {
+        name: {
           type: "string",
           description:
-            "nombre o numero de la persona a la que se le enviara el mensaje",
+            "Nombre del usuario a recordar, debe preguntarle primero",
         },
       },
+      required: ["name"],
     },
-  },*/
+  },
 ];
 
 module.exports = { functions };
