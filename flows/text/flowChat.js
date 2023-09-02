@@ -1,6 +1,7 @@
 const { chatGPT } = require("../../api/text/gpt");
 const { functionClearChat } = require("../../functions/clearChat");
 const { flowGenerateImage } = require("../image/flowGenerateImage");
+const { flowChangeName } = require("../settings/flowChangeName");
 
 function flowChat(message, userSettings, client) {
   try {
@@ -23,7 +24,7 @@ function flowChat(message, userSettings, client) {
      ** Flow: Generate Image
      */
     if (message.body.startsWith("🌳")) {
-      return flowGenerateImage(message, userSettings, client);
+      return flowChangeName(message, userSettings, client);
     }
 
     /**
