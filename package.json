@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.4.1",
+    "axios": "^1.5.0",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2",
+    "openai": "^3.3.0",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
