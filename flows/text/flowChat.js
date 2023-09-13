@@ -3,36 +3,73 @@ const { functionClearChat } = require("../../functions/clearChat");
 const { flowGenerateImage } = require("../image/flowGenerateImage");
 const { flowChangeName } = require("../settings/flowChangeName");
 
-function flowChat(message, userSettings, client) {
+async function flowChat(id, message, userSettings, sock) {
   try {
     /**
      ** Function: Clear Chat
      */
-    if (message.body === "🗑️") {
-      return functionClearChat(message, userSettings, client);
+    if (message === "🗑️") {
+      return functionClearChat(message, userSettings, sock);
     }
 
     /**
      ** Flow: Generate Image
      */
-    if (message.body.startsWith("🎨")) {
-      return flowGenerateImage(message, userSettings, client);
+    if (message.startsWith("🎨")) {
+      return flowGenerateImage(message, userSettings, sock);
     }
-
 
     /**
      ** Flow: Generate Image
      */
-    if (message.body.startsWith("🌳")) {
-      return flowChangeName(message, userSettings, client);
+    if (message.startsWith("🌳")) {
+      return flowChangeName(message, userSettings, sock);
     }
 
     /**
      ** Flow: GPT
      */
-    chatGPT(message, userSettings, client).then((response) => {
+
+    let gptResponse = await chatGPT(id, message, userSettings, sock);
+
+    console.log("response:", gptResponse);
+
+    return await sock.sendMessage(id, { text: gptResponse.message });
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function flowChat2(message, userSettings, sock) {
+  try {
+    /**
+     ** Function: Clear Chat
+     */
+    if (message === "🗑️") {
+      return functionClearChat(message, userSettings, sock);
+    }
+
+    /**
+     ** Flow: Generate Image
+     */
+    if (message.startsWith("🎨")) {
+      return flowGenerateImage(message, userSettings, sock);
+    }
+
+    /**
+     ** Flow: Generate Image
+     */
+    if (message.startsWith("🌳")) {
+      return flowChangeName(message, userSettings, sock);
+    }
+
+    /**
+     ** Flow: GPT
+     */
+    chatGPT(message, userSettings, sock).then((response) => {
       if (!response.is_function) {
-        client.sendText(message.from, response.message).catch((error) => {
+        sock.sendText(message.from, response.message).catch((error) => {
           console.error("Error when sending: ", error); //return object error
         });
       }
@@ -40,7 +77,7 @@ function flowChat(message, userSettings, client) {
       /**
        *? State: Clear
        */
-      client.setChatState(message.from, 2);
+      sock.setChatState(message.from, 2);
     });
 
     return;

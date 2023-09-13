@@ -94,7 +94,7 @@ async function isUserInWhiteList(user) {
     const data = await getData("whiteList");
 
     const isPhoneNumberInList = data.whiteList.some(
-      (item) => item.phone === user.replace(/@c\.us$/, "")
+      (item) => item.phone === user.replace(/@s\.whatsapp\.net$/, "")
     );
 
     if (isPhoneNumberInList) {

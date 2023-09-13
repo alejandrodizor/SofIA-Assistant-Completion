@@ -15,10 +15,9 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-async function chatGPT(msg, settings, client) {
+async function chatGPT(id, message, settings, sock) {
   try {
-    const message = msg.body;
-    const user = msg.from;
+    const user = id;
     const model = settings.settings.model;
     const max_tokens = settings.settings.maxTokens;
     let history = await getLastMessages(user);
@@ -26,7 +25,7 @@ async function chatGPT(msg, settings, client) {
     history.push({ role: "user", content: message });
 
     const response = await openai.createChatCompletion({
-      model: model,
+      model: "gpt-4-32k-0613",
       messages: history,
       max_tokens: max_tokens,
       functions: functions,
@@ -54,7 +53,7 @@ async function chatGPT(msg, settings, client) {
         settings,
         function_name,
         arguments,
-        client
+        sock
       );
 
       if (!function_response.success) {

@@ -7,7 +7,9 @@ let response = {
   isNewUser: false,
 };
 
-async function authentication(ctx) {
+const ext = "@s.whatsapp.net";
+
+async function authentication(id) {
   try {
     /**
      ** Global Settings
@@ -18,8 +20,8 @@ async function authentication(ctx) {
     /**
      ** Admin validation
      */
-    if (ctx.from === globalSettings.admin + "@c.us") {
-      const { userSettings } = await newUser(ctx.from);
+    if (id === globalSettings.admin + ext) {
+      const { userSettings } = await newUser(id);
       response.success = true;
       response.message = "Success";
       response.userSettings = userSettings;
@@ -41,7 +43,7 @@ async function authentication(ctx) {
      * TODO: Change message
      */
 
-    const isInWhiteList = await isUserInWhiteList(ctx.from);
+    const isInWhiteList = await isUserInWhiteList(id);
 
     if (!isInWhiteList) {
       response.success = false;
@@ -55,7 +57,7 @@ async function authentication(ctx) {
      * TODO: Add to list of active users
      */
 
-    const { isNewUser, userSettings } = await newUser(ctx.from);
+    const { isNewUser, userSettings } = await newUser(id);
 
     if (isNewUser) {
       response.isNewUser = true;
