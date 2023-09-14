@@ -25,7 +25,7 @@ async function chatGPT(id, message, settings, sock) {
     history.push({ role: "user", content: message });
 
     const response = await openai.createChatCompletion({
-      model: "gpt-4-32k-0613",
+      model: "gpt-4-0613",
       messages: history,
       max_tokens: max_tokens,
       functions: functions,
@@ -48,6 +48,8 @@ async function chatGPT(id, message, settings, sock) {
 
       // execute function
 
+      //TODO: update this section
+      return;
       let function_response = await worker(
         msg,
         settings,

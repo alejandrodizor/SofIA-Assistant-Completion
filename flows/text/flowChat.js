@@ -32,7 +32,7 @@ async function flowChat(id, message, userSettings, sock) {
 
     let gptResponse = await chatGPT(id, message, userSettings, sock);
 
-    console.log("response:", gptResponse);
+    //console.log("response:", gptResponse);
 
     return await sock.sendMessage(id, { text: gptResponse.message });
 

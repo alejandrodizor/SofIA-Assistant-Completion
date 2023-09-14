@@ -3,6 +3,9 @@ const {
   useMultiFileAuthState,
 } = require("@whiskeysockets/baileys");
 const { flow } = require("./controllers/flow");
+/**
+ ** Debug: true | false
+ */
 const debug = false;
 
 (async () => {

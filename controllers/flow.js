@@ -1,4 +1,4 @@
-//const { flowAudio } = require("../flows/audio/flowAudio");
+const { flowAudio } = require("../flows/audio/flowAudio");
 //const { flowVoice } = require("../flows/audio/flowVoice");
 const { flowChat } = require("../flows/text/flowChat");
 const authentication = require("./auth");
@@ -8,7 +8,6 @@ async function flow(sock, response) {
   /**
    ** Variables
    */
-
   const params = response.messages[0];
   const id = params.key.remoteJid;
   const message = params.message.conversation;
@@ -33,7 +32,6 @@ async function flow(sock, response) {
   /**
    ** Message Type: Chat
    */
-
   if (messageType === "chat") {
     /**
      *? State: Composing
@@ -41,13 +39,53 @@ async function flow(sock, response) {
     sock.sendPresenceUpdate("composing", id);
 
     /**
-     ** FlowChat
+     ** Flow Chat
      */
     flowChat(id, message, auth.userSettings, sock);
+  } else if (messageType === "audio") {
+    /**
+     ** Send listening message
+     */
+    await sock.sendMessage(id, {
+      text: "🔊 Transcribiendo audio...",
+    });
+
+    /**
+     *? State: Composing
+     */
+    sock.sendPresenceUpdate("composing", id);
+
+    /**
+     ** Flow: Audio
+     */
+    await flowAudio(params, sock);
+  } else if (messageType === "voice") {
+    /**
+     ** Flow: Voice
+     */
+    await sock.sendMessage(id, {
+      text: "Voice",
+    });
+  } else if (messageType === "sticker") {
+    /**
+     ** Flow Sticker
+     */
+    await sock.sendMessage(id, {
+      react: {
+        text: "💖",
+        key: params.key,
+      },
+    });
+  } else {
+    /**
+     ** Flow: Unknown
+     */
+    await sock.sendMessage(id, {
+      text: "Lo siento, todavía no puedo responder ese tipo de mensajes 😓",
+    });
   }
 
-  return sock.sendPresenceUpdate("composing", id);
-
+  return sock.sendPresenceUpdate("available", id);
 }
 
 function flow2(client) {
