@@ -4,53 +4,66 @@ const { textToSpeech } = require("../../api/audio/textToSpeech");
 const transcribeAudio = require("../../api/audio/whisper");
 const { chatGPT } = require("../../api/text/gpt");
 
-async function flowVoice(message, userSettings, client) {
+async function flowVoice(params, userSettings, sock) {
   try {
+    /**
+     ** Variables
+     */
+    const id = params.key.remoteJid;
+
     /**
      ** Downloading audio
      */
-
-    const conversionResult = await downloadAudio(message, client);
+    const conversionResult = await downloadAudio(params);
 
     if (conversionResult.success) {
+      /**
+       ** Transcribe audio
+       */
       transcribeAudio(conversionResult.fileMP3Path).then((response) => {
         if (response.success) {
-          whisperResponse = response.response.text;
+          let whisperResponse = response.response.text;
           deleteFile(conversionResult.fileOggPath);
           deleteFile(conversionResult.fileMP3Path);
-
+          /*
           const msg = {
             from: message.from,
             body: whisperResponse,
-          };
+          };*/
 
-          chatGPT(msg, userSettings, client).then(async (response) => {
-            if (!response.is_function) {
-              if (userSettings.settings.voiceAnnouncements) {
-                const responeTextToSpeech = await textToSpeech(
-                  response.message,
-                  userSettings.settings.language
-                );
+          chatGPT(id, whisperResponse, userSettings, sock).then(
+            async (response) => {
+              if (!response.is_function) {
+                if (userSettings.settings.voiceAnnouncements) {
+                  /**
+                   ** Text to Speech
+                   */
+                  const responeTextToSpeech = await textToSpeech(
+                    response.message,
+                    userSettings.settings.language
+                  );
 
-                client.sendPttFromBase64(
-                  message.from,
-                  responeTextToSpeech.microsoft.audio,
-                  "Mensaje de SofIA"
-                );
-              } else {
-                client
-                  .sendText(message.from, response.message)
-                  .catch((error) => {
-                    console.error("Error when sending: ", error); //return object error
+                  /**
+                   ** Send audio
+                   */
+                  await sock.sendMessage(id, {
+                    audio: {
+                      url: responeTextToSpeech.microsoft.audio_resource_url,
+                    },
+                    ptt: true,
+                    mimetype: "audio/mpeg",
                   });
+                } else {
+                  /**
+                   ** Send text
+                   */
+                  await sock.sendMessage(id, {
+                    text: response.message,
+                  });
+                }
               }
             }
-
-            /**
-             *? State: Clear
-             */
-            client.setChatState(message.from, 2);
-          });
+          );
         } else {
         }
       });

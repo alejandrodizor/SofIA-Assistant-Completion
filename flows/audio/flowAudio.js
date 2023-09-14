@@ -10,8 +10,6 @@ async function flowAudio(params, sock) {
     const id = params.key.remoteJid;
     const message = params.message.conversation;
 
-  
-
     /**
      ** Downloading audio
      */

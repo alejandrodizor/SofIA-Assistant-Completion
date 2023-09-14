@@ -1,5 +1,5 @@
 const { flowAudio } = require("../flows/audio/flowAudio");
-//const { flowVoice } = require("../flows/audio/flowVoice");
+const { flowVoice } = require("../flows/audio/flowVoice");
 const { flowChat } = require("../flows/text/flowChat");
 const authentication = require("./auth");
 const { getMessageType } = require("./utils");
@@ -53,19 +53,21 @@ async function flow(sock, response) {
     /**
      *? State: Composing
      */
-    sock.sendPresenceUpdate("composing", id);
+    await sock.sendPresenceUpdate("composing", id);
 
     /**
      ** Flow: Audio
      */
     await flowAudio(params, sock);
   } else if (messageType === "voice") {
+     /**
+     *? State: Composing
+     */
+     await sock.sendPresenceUpdate("recording", id);
     /**
      ** Flow: Voice
      */
-    await sock.sendMessage(id, {
-      text: "Voice",
-    });
+     await flowVoice(params, auth.userSettings, sock);
   } else if (messageType === "sticker") {
     /**
      ** Flow Sticker
