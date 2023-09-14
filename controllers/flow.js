@@ -61,7 +61,7 @@ async function flow(sock, response) {
     await flowAudio(params, sock);
   } else if (messageType === "voice") {
      /**
-     *? State: Composing
+     *? State: Recorging
      */
      await sock.sendPresenceUpdate("recording", id);
     /**
@@ -87,65 +87,8 @@ async function flow(sock, response) {
     });
   }
 
-  return sock.sendPresenceUpdate("available", id);
+  return await sock.sendPresenceUpdate("available", id);
 }
 
-function flow2(client) {
-  client.onMessage(async (message) => {
-    /**
-     ** Authentication
-     */
-
-    let auth = await authentication(message);
-
-    if (auth.success === false) {
-      client.sendText(message.from, auth.message);
-      return;
-    }
-
-    if (message.type === "chat") {
-      /**
-       *? State: Typing
-       */
-      client.setChatState(message.from, 0);
-      /**
-       ** FlowChat
-       */
-      //return flowChat(message, auth.userSettings, client);
-    } else if (message.type === "ptt") {
-      /**
-       *? State: Recording
-       */
-      client.setChatState(message.from, 1);
-      /**
-       ** FlowVoice
-       */
-      //return flowVoice(message, auth.userSettings, client);
-    } else if (message.type === "audio") {
-      /**
-       *? State: Typing
-       */
-      client.setChatState(message.from, 0);
-      /**
-       ** FlowAudio
-       */
-      // return flowAudio(message, auth.userSettings, client);
-    } else {
-      client
-        .sendText(
-          message.from,
-          "Lo siento, todavía no puedo responder ese tipo de mensajes 😓"
-        )
-        .catch((error) => {
-          console.error("Error when sending: ", error);
-        });
-
-      /**
-       *? State: Clear
-       */
-      client.setChatState(message.from, 2);
-    }
-  });
-}
 
 module.exports = { flow };
