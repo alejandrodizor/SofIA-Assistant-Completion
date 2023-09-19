@@ -9,7 +9,7 @@ const whiteList = require("./whiteList.json");
 setData("globalSettings", globalSettings);
 
 // Set White List
-//setData("whiteList", whiteList);
+setData("whiteList", whiteList);
 
 // Set Bugs
 setData("bugs", {
