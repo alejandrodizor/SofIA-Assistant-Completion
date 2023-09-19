@@ -41,7 +41,7 @@ async function flow(sock, response) {
     /**
      ** Flow Chat
      */
-    flowChat(id, message, auth.userSettings, sock);
+    await flowChat(id, message, auth.userSettings, sock);
   } else if (messageType === "audio") {
     /**
      ** Send listening message

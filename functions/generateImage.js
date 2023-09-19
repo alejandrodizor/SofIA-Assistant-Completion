@@ -1,30 +1,42 @@
 const { flowGenerateImage } = require("../flows/image/flowGenerateImage");
 
 async function functionGenerateImage(
+  id,
   message,
   userSettings,
-  client,
+  sock,
   args,
   is_function = false
 ) {
   try {
     let response = await flowGenerateImage(
+      id,
       message,
       userSettings,
-      client,
+      sock,
       args,
       true
     );
 
     if (response === "Error") {
-      return {success:false, response: "Hubo un error al generar la imagen.", showMessage: false, saveMessage: true};
+      return {
+        success: false,
+        response: "Hubo un error al generar la imagen.",
+        showMessage: false,
+        saveMessage: true,
+      };
     }
 
-    return {success:true, response, showMessage: false, saveMessage: true};
+    return { success: true, response, showMessage: false, saveMessage: true };
   } catch (error) {
     console.log(error);
-    return {success:false, response: "Hubo un error al generar la imagen.", showMessage: false, saveMessage: true};
-}
+    return {
+      success: false,
+      response: "Hubo un error al generar la imagen.",
+      showMessage: false,
+      saveMessage: true,
+    };
+  }
 }
 
 module.exports = { functionGenerateImage };
