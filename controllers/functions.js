@@ -14,7 +14,7 @@ const functions = [
   },
   {
     name: "crear_imagen",
-    description: "Crea o dibuja una imagen a partir de un texto.",
+    description: "Cuando el usuario pide crear una imagen, crea una imagen.",
     parameters: {
       type: "object",
       properties: {
@@ -29,14 +29,14 @@ const functions = [
   {
     name: "recordar_nombre",
     description:
-      "Cada vez que el usuario dice su nombre, se recuerda el nombre del usuario para llamarlo por su nombre",
+      "Cuando el usuario pide recordar su nombre, o que lo llamen por su nombre, lo guarda en la base de datos.",
     parameters: {
       type: "object",
       properties: {
         name: {
           type: "string",
           description:
-            "Nombre del usuario a recordar, debe preguntarle primero",
+            "Nombre del usuario a recordar",
         },
       },
       required: ["name"],

@@ -146,6 +146,7 @@ async function getLastMessages(user) {
 
 async function clearChat(user, userSettings) {
   try {
+    console.log("Clearing chat: "+userSettings);
  
     const settings = userSettings.settings;
 
@@ -179,7 +180,7 @@ async function clearAllChats(user) {
   }
 }
 
-async function changeName(user, userSettings, name) {
+async function changeName(id, userSettings, name) {
   try {
     const settingsData = userSettings;
     settingsData.settings.name = name;
@@ -197,7 +198,7 @@ async function changeName(user, userSettings, name) {
 
     settingsData.settings.tuning = tuning;
 
-    return await setData(`${user}-settings`, settingsData);
+    return await setData(`${id}-settings`, settingsData);
   } catch (error) {
     console.log(error);
   }

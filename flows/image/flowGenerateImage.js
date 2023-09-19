@@ -1,13 +1,15 @@
-const generateImage = require("../../api/image/dall-e");
+const generateImage = require("../../api/image/stable-difussion");
+
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 async function flowGenerateImage(
+  id,
   message,
   userSettings,
-  client,
+  sock,
   args = {},
   is_function = false
 ) {
@@ -15,12 +17,14 @@ async function flowGenerateImage(
     /**
      ** Send working message
      **/
-    client.sendText(message.from, "🖼️ Generando imagen...");
+     await sock.sendMessage(id, {
+      text: "🖼️ Generando imagen....",
+    });
 
-    /**
-     *? State: Typing
+   /**
+     *? State: Composing
      */
-    client.setChatState(message.from, 0);
+    await sock.sendPresenceUpdate("composing", id);
 
     /**
      ** Generate image
@@ -32,27 +36,20 @@ async function flowGenerateImage(
       prompt = args.description;
     } else {
       const emojiLength = "🎨".length;
-      prompt = message.body.substring(emojiLength).trimStart();
+      prompt = message.substring(emojiLength).trimStart();
     }
 
-    const response = await generateImage(prompt);
+    const buffer = await generateImage(prompt);
 
-    client
-      .sendImage(
-        message.from,
-        response,
-        capitalizeFirstLetter(prompt),
-        capitalizeFirstLetter(prompt)
-      )
-      .catch((error) => {
-        console.error("Error when sending: ", error); //return object error
-      });
+    await sock.sendMessage(id, {
+      image: buffer,
+      mimetype: "image/jpeg",
+      caption: capitalizeFirstLetter(prompt)
+    });
 
-    /**
-     *? State: Clear
-     */
-    client.setChatState(message.from, 2);
+    //todo: capitalizeFirstLetter(prompt)
 
+  
     /**
      ** Return response
      **/
@@ -60,6 +57,7 @@ async function flowGenerateImage(
     if (is_function) {
       return "Imagen generada correctamente. 👍";
     }
+    return; 
   } catch (error) {
     console.log(error);
   }

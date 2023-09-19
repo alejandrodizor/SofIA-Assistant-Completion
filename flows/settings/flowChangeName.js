@@ -1,17 +1,18 @@
 const { changeName } = require("../../controllers/db");
 
-async function flowChangeName(message, userSettings, client) {
+async function flowChangeName(id, message, userSettings, sock) {
   try {
     const emojiLength = "🌳".length;
-    const prompt = message.body.substring(emojiLength).trimStart();
-    let response = await changeName(message.from, userSettings, prompt);
+    const prompt = message.substring(emojiLength).trimStart();
+    let response = await changeName(id, userSettings, prompt);
     if (response == "OK") {
-        response = `Perfecto, recordaré que tu nombre es ${prompt} de ahora en adelante.`;
+      response = `Perfecto, recordaré que tu nombre es ${prompt} de ahora en adelante.`;
     } else {
       response = "Hubo un error al recordar el nombre.";
     }
-    client.sendText(message.from, response).catch((erro) => {
-      console.error("Error when sending: ", erro); //return object error
+
+    await sock.sendMessage(id, {
+      text: response,
     });
   } catch (error) {
     console.log(error);

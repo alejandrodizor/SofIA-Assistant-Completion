@@ -9,6 +9,10 @@ const { worker } = require("../../controllers/function-worker");
 const { functions } = require("../../controllers/functions");
 const { getLastMessages, pushMessage } = require("../../controllers/db");
 
+/**
+ ** Configuration: OpenAI
+ */
+
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -17,15 +21,22 @@ const openai = new OpenAIApi(configuration);
 
 async function chatGPT(id, message, settings, sock) {
   try {
-    const user = id;
     const model = settings.settings.model;
     const max_tokens = settings.settings.maxTokens;
-    let history = await getLastMessages(user);
+    let history = await getLastMessages(id);
+
+    /**
+     ** Push Message
+     */
 
     history.push({ role: "user", content: message });
 
+    /**
+     ** OpenAI: Create Chat Completion
+     */
+
     const response = await openai.createChatCompletion({
-      model: "gpt-4-0613",
+      model: "gpt-3.5-turbo-16k-0613",
       messages: history,
       max_tokens: max_tokens,
       functions: functions,
@@ -36,7 +47,10 @@ async function chatGPT(id, message, settings, sock) {
     if (response_message.length < 1) {
       return false;
     } else {
-      await pushMessage(user, { role: "user", content: message }, settings);
+      /**
+       ** Push Message
+       */
+      await pushMessage(id, { role: "user", content: message }, settings);
     }
 
     if (
@@ -46,12 +60,12 @@ async function chatGPT(id, message, settings, sock) {
       let function_name = response_message.function_call.name;
       let arguments = JSON.parse(response_message.function_call.arguments);
 
-      // execute function
-
-      //TODO: update this section
-      return;
+      /**
+       ** Function: Execute Function
+       */
       let function_response = await worker(
-        msg,
+        id,
+        message,
         settings,
         function_name,
         arguments,
@@ -68,6 +82,10 @@ async function chatGPT(id, message, settings, sock) {
 
       console.log("function_response", function_response);
 
+      /**
+       ** Push Message
+       */
+
       history.push({
         role: "function",
         name: function_name,
@@ -75,7 +93,7 @@ async function chatGPT(id, message, settings, sock) {
       });
 
       pushMessage(
-        user,
+        id,
         {
           role: "function",
           content: function_response.response,
@@ -85,8 +103,11 @@ async function chatGPT(id, message, settings, sock) {
       );
 
       if (function_response.saveMessage) {
+        /**
+         ** Push Message
+         */
         await pushMessage(
-          user,
+          id,
           {
             role: "assistant",
             content: function_response.response,
@@ -101,7 +122,8 @@ async function chatGPT(id, message, settings, sock) {
           function_name: null,
           arguments: null,
           message: function_response.response,
-        };
+          showMessage: false
+        }
       }
 
       const second_response = await openai.createChatCompletion({
@@ -117,10 +139,14 @@ async function chatGPT(id, message, settings, sock) {
         function_name: null,
         arguments: null,
         message: second_response_message.content,
+        showMessage: true
       };
     } else {
+      /**
+       ** Push Message
+       */
       pushMessage(
-        user,
+        id,
         {
           role: "assistant",
           content: response_message.content,
@@ -132,6 +158,7 @@ async function chatGPT(id, message, settings, sock) {
         function_name: null,
         arguments: null,
         message: response_message.content,
+        showMessage: true
       };
     }
   } catch (err) {

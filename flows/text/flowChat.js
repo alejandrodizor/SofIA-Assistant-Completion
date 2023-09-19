@@ -9,78 +9,35 @@ async function flowChat(id, message, userSettings, sock) {
      ** Function: Clear Chat
      */
     if (message === "🗑️") {
-      return functionClearChat(message, userSettings, sock);
+      return functionClearChat(id, userSettings, sock);
     }
 
     /**
      ** Flow: Generate Image
      */
     if (message.startsWith("🎨")) {
-      return flowGenerateImage(message, userSettings, sock);
+      return flowGenerateImage(id, message, userSettings, sock);
     }
 
     /**
-     ** Flow: Generate Image
+     ** Flow: Change Name
      */
     if (message.startsWith("🌳")) {
-      return flowChangeName(message, userSettings, sock);
+      return flowChangeName(id, message, userSettings, sock);
     }
 
     /**
      ** Flow: GPT
      */
-
     let gptResponse = await chatGPT(id, message, userSettings, sock);
 
-    //console.log("response:", gptResponse);
-
-    return await sock.sendMessage(id, { text: gptResponse.message });
-
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-function flowChat2(message, userSettings, sock) {
-  try {
-    /**
-     ** Function: Clear Chat
-     */
-    if (message === "🗑️") {
-      return functionClearChat(message, userSettings, sock);
+    if(gptResponse.showMessage) {
+      return await sock.sendMessage(id, { text: gptResponse.message });
     }
-
-    /**
-     ** Flow: Generate Image
-     */
-    if (message.startsWith("🎨")) {
-      return flowGenerateImage(message, userSettings, sock);
-    }
-
-    /**
-     ** Flow: Generate Image
-     */
-    if (message.startsWith("🌳")) {
-      return flowChangeName(message, userSettings, sock);
-    }
-
-    /**
-     ** Flow: GPT
-     */
-    chatGPT(message, userSettings, sock).then((response) => {
-      if (!response.is_function) {
-        sock.sendText(message.from, response.message).catch((error) => {
-          console.error("Error when sending: ", error); //return object error
-        });
-      }
-
-      /**
-       *? State: Clear
-       */
-      sock.setChatState(message.from, 2);
-    });
 
     return;
+
+    
   } catch (error) {
     console.log(error);
   }
