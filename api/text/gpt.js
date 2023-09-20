@@ -102,7 +102,7 @@ async function chatGPT(id, message, settings, sock) {
         settings
       );
 
-      if (function_response.saveMessage) {
+      if (function_response.saveMessage && function_response.response) {
         /**
          ** Push Message
          */
@@ -122,8 +122,8 @@ async function chatGPT(id, message, settings, sock) {
           function_name: null,
           arguments: null,
           message: function_response.response,
-          showMessage: false
-        }
+          showMessage: false,
+        };
       }
 
       const second_response = await openai.createChatCompletion({
@@ -139,26 +139,29 @@ async function chatGPT(id, message, settings, sock) {
         function_name: null,
         arguments: null,
         message: second_response_message.content,
-        showMessage: true
+        showMessage: true,
       };
     } else {
-      /**
-       ** Push Message
-       */
-      pushMessage(
-        id,
-        {
-          role: "assistant",
-          content: response_message.content,
-        },
-        settings
-      );
+      if (response_message.content) {
+        /**
+         ** Push Message
+         */
+        pushMessage(
+          id,
+          {
+            role: "assistant",
+            content: response_message.content,
+          },
+          settings
+        );
+      }
+
       return {
         is_function: false,
         function_name: null,
         arguments: null,
         message: response_message.content,
-        showMessage: true
+        showMessage: true,
       };
     }
   } catch (err) {

@@ -27,7 +27,7 @@ async function flowSendDashboard(
       "\n\n👉🏻 Puedes cambiar mis configuraciones desde el siguiente link:" +
       "\n\n🔗 " +
       dashboardLink +
-      "\n\n💡 No compartas este link con nadie, es exclusivo para ti 🤫.";
+      "\n\n💡 No compartas este link con nadie, es exclusivo para ti 🤫";
 
     /**
      ** Send Dashboard Message
