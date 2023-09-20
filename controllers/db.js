@@ -1,9 +1,11 @@
 const { Redis } = require("@upstash/redis");
+const jwt = require('jsonwebtoken');
+
 const path = require("path");
 const dotenv = require("dotenv");
-
 const envPath = path.resolve(__dirname, "../.env");
 dotenv.config({ path: envPath });
+
 
 const redis = new Redis({
   url: process.env.REDIS_URL,
@@ -56,16 +58,30 @@ async function pushMessage(user, message, userSettings) {
   }
 }
 
+/**
+ ** Create Token
+ *  @param {*} data
+ *  @returns
+ */
+function createToken(data) {
+  return jwt.sign(data, process.env.TOKEN_SECRET);
+}
 
 // funcion para crear un nuevo usuario
 async function newUser(user) {
   try {
     const data = await getData(`${user}-settings`);
 
+    /**
+     ** Check if user exists
+     **/
     if (data !== null) {
       return { new: false, userSettings: data };
     } else {
-      let newChats = {
+      /**
+       ** Create Chat
+       **/
+      const newChats = {
         chats: [
           {
             id: 1,
@@ -74,8 +90,74 @@ async function newUser(user) {
         ],
       };
 
-      const userSettings = require("../schemas/userSettings.json");
+      /**
+       ** Token
+       **/
+       const token = createToken({ user: user });
 
+      /**
+       ** Create User Settings
+       * */
+
+      const userSettings = {
+        settings: {
+          token: token,
+          name: "",
+          birthDate: "",
+          interests: [],
+          currentChat: 1,
+          tutorial: true,
+          newUser: true,
+          language: "es-CO",
+          model: "gpt-3.5-turbo-16k-0613",
+          maxTokens: 700,
+          typeAnnouncements: "voice",
+          announcements: true,
+          voiceAnnouncements: true,
+          modelImage: "stable-diffusion",
+          maxDailyImage: 5,
+          maxMessages: 14,
+          maxImageRegenerations: 3,
+          limitAudioSeconds: 240,
+          premium: false,
+          expresionTone: "informal", //informal, formal, sarcastic
+          invitations: 3,
+          voiceAPISettings: {
+            provider: "edenai", // elevenlabs, edenai
+            speed: 1,
+            pitch: 1,
+            volume: 1,
+            tone: "neutral",
+            textToSpeechModel: "EXAVITQu4vr4xnSDxMaL",
+            speechStability: 0.75,
+            speechSimilarityBoost: 0.75,
+          },
+          lastImagePrompt: "",
+          lastTextPrompt: "",
+          history: [
+            {
+              role: "system",
+              content:
+                "Eres SofIA una asistente de inteligencia artificial desarrollada por Alejandro Diaz como parte de su investigación sobre IA. Eres muy amable y cálida.",
+            },
+          ],
+          tuning: [
+            {
+              role: "user",
+              content: "Hola Sofia, ¿cómo estás?",
+            },
+            {
+              role: "assistant",
+              content:
+                "¡Hola! Feliz de que estés aquí. ¿En qué puedo ayudarte?",
+            },
+          ],
+        },
+      };
+
+      /**
+       ** Save Data
+       **/
       await setData(`${user}-chats`, newChats);
       await setData(`${user}-settings`, userSettings);
 
@@ -146,8 +228,8 @@ async function getLastMessages(user) {
 
 async function clearChat(user, userSettings) {
   try {
-    console.log("Clearing chat: "+userSettings);
- 
+    console.log("Clearing chat: " + userSettings);
+
     const settings = userSettings.settings;
 
     const chatId = settings.currentChat;
@@ -204,8 +286,6 @@ async function changeName(id, userSettings, name) {
   }
 }
 
-
-
 module.exports = {
   setData,
   getData,
@@ -216,5 +296,5 @@ module.exports = {
   pushMessage,
   clearAllChats,
   clearChat,
-  changeName
+  changeName,
 };
