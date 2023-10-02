@@ -68,7 +68,6 @@ const numberErrorMessage = "573186312380@s.whatsapp.net";
       } catch (error) {
         console.log(error);
       }
-
       console.log(error);
     }
   });
