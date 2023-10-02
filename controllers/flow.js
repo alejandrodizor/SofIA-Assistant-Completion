@@ -4,6 +4,8 @@ const { flowChat } = require("../flows/text/flowChat");
 const authentication = require("./auth");
 const { getMessageType } = require("./utils");
 
+//TODO: hacer que funcione desde el navegador y desde la app desktop
+
 async function flow(sock, response) {
   /**
    ** Variables
