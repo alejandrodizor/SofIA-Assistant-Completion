@@ -1,8 +1,10 @@
 const {
   default: makeWASocket,
   useMultiFileAuthState,
+  DisconnectReason,
 } = require("@whiskeysockets/baileys");
 const { flow } = require("./controllers/flow");
+
 /**
  ** Debug: true | false
  */
@@ -10,9 +12,33 @@ const debug = false;
 const sentErrorMessage = true;
 const numberErrorMessage = "573186312380@s.whatsapp.net";
 
-(async () => {
+/**
+ ** Main function
+ **/
+
+async function connectToWhatsApp() {
   const { state, saveCreds } = await useMultiFileAuthState("auth_info_baileys");
   const sock = makeWASocket({ auth: state, printQRInTerminal: true });
+
+  sock.ev.on("connection.update", (update) => {
+    const { connection, lastDisconnect } = update;
+    if (connection === "close") {
+      const shouldReconnect =
+        lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut;
+      console.log(
+        "connection closed due to ",
+        lastDisconnect.error,
+        ", reconnecting ",
+        shouldReconnect
+      );
+      // reconnect if not logged out
+      if (shouldReconnect) {
+        connectToWhatsApp();
+      }
+    } else if (connection === "open") {
+      console.log("opened connection");
+    }
+  });
 
   sock.ev.on("creds.update", saveCreds);
 
@@ -71,4 +97,9 @@ const numberErrorMessage = "573186312380@s.whatsapp.net";
       console.log(error);
     }
   });
-})();
+}
+
+/**
+ ** Start
+ */
+connectToWhatsApp();
