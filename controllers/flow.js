@@ -44,6 +44,21 @@ async function flow(sock, response) {
      ** Flow Chat
      */
     await flowChat(id, message, auth.userSettings, sock);
+  } else if (messageType === "desktop") {
+    /**
+     *? State: Composing
+     */
+    sock.sendPresenceUpdate("composing", id);
+
+    /**
+     ** Flow Chat Desktop
+     */
+    await flowChat(
+      id,
+      params.message.extendedTextMessage.text,
+      auth.userSettings,
+      sock
+    );
   } else if (messageType === "audio") {
     /**
      ** Send listening message
@@ -62,14 +77,14 @@ async function flow(sock, response) {
      */
     await flowAudio(params, sock);
   } else if (messageType === "voice") {
-     /**
+    /**
      *? State: Recorging
      */
-     await sock.sendPresenceUpdate("recording", id);
+    await sock.sendPresenceUpdate("recording", id);
     /**
      ** Flow: Voice
      */
-     await flowVoice(params, auth.userSettings, sock);
+    await flowVoice(params, auth.userSettings, sock);
   } else if (messageType === "sticker") {
     /**
      ** Flow Sticker
@@ -91,6 +106,5 @@ async function flow(sock, response) {
 
   return await sock.sendPresenceUpdate("available", id);
 }
-
 
 module.exports = { flow };
