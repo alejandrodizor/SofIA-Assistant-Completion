@@ -25,6 +25,9 @@ async function connectToWhatsApp() {
     emitOwnEvents: debug
   });
 
+  /**
+   ** Re-connection control
+   */
   sock.ev.on("connection.update", (update) => {
     const { connection, lastDisconnect } = update;
     if (connection === "close") {
@@ -45,8 +48,15 @@ async function connectToWhatsApp() {
     }
   });
 
+  /**
+   ** Save credentials
+   **/
+
   sock.ev.on("creds.update", saveCreds);
 
+  /**
+   ** Messages control
+   **/
   sock.ev.on("messages.upsert", async (response) => {
     try {
       /**
