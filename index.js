@@ -8,7 +8,7 @@ const { flow } = require("./controllers/flow");
 /**
  ** Debug: true | false
  */
-const debug = true;
+const debug = false;
 const sentErrorMessage = true;
 const numberErrorMessage = "573186312380@s.whatsapp.net";
 
