@@ -41,11 +41,17 @@ async function flowGenerateImage(
 
     const buffer = await generateImage(prompt);
 
+    try {
+
     await sock.sendMessage(id, {
       image: buffer,
       mimetype: "image/jpeg",
       caption: capitalizeFirstLetter(prompt)
     });
+
+    } catch (error) {
+      console.log(error);
+    }
 
     //todo: capitalizeFirstLetter(prompt)
 
