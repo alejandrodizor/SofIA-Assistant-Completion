@@ -1,7 +1,7 @@
 function getMessageType(messageObject) {
   if (messageObject.message.conversation) {
     return "chat";
-  } else if (messageObject.message.extendedTextMessage.text) {
+  } else if (messageObject.message.extendedTextMessage) {
     return "desktop";
   } else if (messageObject.message.audioMessage) {
     if (
