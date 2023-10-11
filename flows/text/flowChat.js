@@ -34,6 +34,19 @@ async function flowChat(id, message, userSettings, sock) {
   }
 
   /**
+   ** Flow: Admin Commands
+   */
+  if (message.startsWith("@")) {
+    if (userSettings.settings.admin === true) {
+      return await flowAdmin(message, sock);
+    } else {
+      return await sock.sendMessage(id, {
+        text: "🖐️ No tienes permisos de administrador.",
+      });
+    }
+  }
+
+  /**
    ** Flow: GPT
    */
   let gptResponse = await chatGPT(id, message, userSettings, sock);

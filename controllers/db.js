@@ -286,6 +286,57 @@ async function changeName(id, userSettings, name) {
   }
 }
 
+async function addUserToWhiteList(phone, name = "", refer = "") {
+  try {
+    const whiteListData = await getData("whiteList");
+
+    const whiteList = whiteListData.whiteList;
+
+    const newId = whiteList.length + 1;
+
+    const newUser = {
+      id: newId,
+      name: name,
+      phone: phone,
+      refer: refer,
+    };
+
+    whiteList.push(newUser);
+
+    return await setData("whiteList", whiteListData);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function deleteUserFromWhiteList(phone) {
+  try {
+    const whiteListData = await getData("whiteList");
+
+    const whiteList = whiteListData.whiteList;
+
+    const newWhiteList = whiteList.filter((user) => user.phone !== phone);
+
+    return await setData("whiteList", newWhiteList);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getAllUsers() {
+  try {
+    const keys = await redis.keys("*-settings");
+
+    const users = keys.map((key) => key.split("-")[0]);
+
+    return users;
+  } catch (error) {
+    console.log(error);
+
+    return error;
+  }
+}
+
 module.exports = {
   setData,
   getData,
@@ -297,4 +348,7 @@ module.exports = {
   clearAllChats,
   clearChat,
   changeName,
+  addUserToWhiteList,
+  deleteUserFromWhiteList,
+  getAllUsers,
 };

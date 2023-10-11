@@ -3,7 +3,7 @@ const { Redis } = require("@upstash/redis");
 const redis = new Redis({
   url: "https://us1-guided-jaybird-39219.upstash.io",
   token:
-    "AZkzASQgZDdkMzBlN2QtOTUxNy00ZWU4LWE5MDUtYjFhMWU2NzE5M2JhN2NmYzVmMzBhZGYzNDZmMDg4MTkzYzIyYTgyMjY0MTY=",
+    "",
 });
 
 async function setData(key, value) {

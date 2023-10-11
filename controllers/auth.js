@@ -5,6 +5,7 @@ let response = {
   message: "Error",
   userSettings: null,
   isNewUser: false,
+  isAdmin: false,
 };
 
 const ext = "@s.whatsapp.net";
@@ -25,6 +26,7 @@ async function authentication(id) {
       response.success = true;
       response.message = "Success";
       response.userSettings = userSettings;
+      response.isAdmin = true;
       return response;
     }
 
