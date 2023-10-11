@@ -37,6 +37,13 @@ async function flowSendDashboard(
       mimetype: "image/jpeg",
       caption: dashboardMessage,
     });
+
+    return {
+      success: true,
+      response: "Ya te envié el link al panel de configuración.",
+      showMessage: false,
+      saveMessage: true,
+    };
   } catch (error) {
     console.log(error);
   }

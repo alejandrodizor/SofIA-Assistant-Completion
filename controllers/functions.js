@@ -4,12 +4,8 @@ const functions = [
     description: "Limpia o eliminar el chat o el historial de un usuario.",
     parameters: {
       type: "object",
-      properties: {
-        chat: {
-          type: "number",
-          description: "numero del chat a limpiar",
-        },
-      },
+      properties: {},
+      required: [],
     },
   },
   {
@@ -35,11 +31,20 @@ const functions = [
       properties: {
         name: {
           type: "string",
-          description:
-            "Nombre del usuario a recordar",
+          description: "Nombre del usuario a recordar",
         },
       },
       required: ["name"],
+    },
+  },
+  {
+    name: "enviar_dashboard",
+    description:
+      "Cuando el usuario pide enviar el link del dashboard o el panel de configuración, lo envia.",
+    parameters: {
+      type: "object",
+      properties: {},
+      required: [],
     },
   },
 ];

@@ -3,8 +3,9 @@ const { functionClearChat } = require("../../functions/clearChat");
 const { flowGenerateImage } = require("../image/flowGenerateImage");
 const { flowChangeName } = require("../settings/flowChangeName");
 const { flowSendDashboard } = require("../settings/flowSendDashboard");
+const { flowAdmin } = require("./flowAdmin");
 
-async function flowChat(id, message, userSettings, sock) {
+async function flowChat(id, message, userSettings, isAdmin, sock) {
   /**
    ** Function: Clear Chat
    */
@@ -37,13 +38,7 @@ async function flowChat(id, message, userSettings, sock) {
    ** Flow: Admin Commands
    */
   if (message.startsWith("@")) {
-    if (userSettings.settings.admin === true) {
-      return await flowAdmin(message, sock);
-    } else {
-      return await sock.sendMessage(id, {
-        text: "🖐️ No tienes permisos de administrador.",
-      });
-    }
+    return await flowAdmin(id, message, isAdmin, sock);
   }
 
   /**

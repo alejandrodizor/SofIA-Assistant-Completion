@@ -41,7 +41,7 @@ async function flow(sock, response) {
     /**
      ** Flow Chat
      */
-    await flowChat(id, message, auth.userSettings, sock);
+    await flowChat(id, message, auth.userSettings, auth.isAdmin, sock);
   } else if (messageType === "desktop") {
     /**
      *? State: Composing
@@ -55,6 +55,7 @@ async function flow(sock, response) {
       id,
       params.message.extendedTextMessage.text,
       auth.userSettings,
+      auth.isAdmin,
       sock
     );
   } else if (messageType === "audio") {

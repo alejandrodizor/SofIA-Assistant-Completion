@@ -2,7 +2,16 @@ const { addNewUser } = require("../../functions/addNewUser");
 const { deleteUser } = require("../../functions/deleteUser");
 const { getAllUsersList } = require("../../functions/getAllUsers");
 
-async function flowAdmin(message, sock) {
+async function flowAdmin(id, message, isAdmin, sock) {
+  /**
+   ** Validate Admin
+   **/
+  if (!isAdmin) {
+    return await sock.sendMessage(id, {
+      text: "🖐️ No tienes permisos de administrador.",
+    });
+  }
+
   /**
    * @add
    */

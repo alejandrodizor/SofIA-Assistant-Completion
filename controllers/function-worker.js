@@ -1,3 +1,4 @@
+const { flowSendDashboard } = require("../flows/settings/flowSendDashboard");
 const { functionClearChat } = require("../functions/clearChat");
 const { functionGenerateImage } = require("../functions/generateImage");
 const { functionRecordarNombre } = require("../functions/recordarNombre");
@@ -5,7 +6,13 @@ const { functionRecordarNombre } = require("../functions/recordarNombre");
 const ext = "@s.whatsapp.net";
 
 async function worker(id, message, userSettings, function_name, args, sock) {
-  console.log("worker", "id:"+id, "message:"+message, "function:"+function_name, "args:"+args);
+  console.log(
+    "worker",
+    "id:" + id,
+    "message:" + message,
+    "function:" + function_name,
+    "args:" + args
+  );
   /**
    ** Function: Clear Chat
    */
@@ -37,6 +44,13 @@ async function worker(id, message, userSettings, function_name, args, sock) {
       args,
       true
     );
+  }
+
+  /**
+   ** Function: Enviar Dashboard
+   */
+  if (function_name === "enviar_dashboard") {
+    return await flowSendDashboard(id, message, userSettings, sock, true);
   }
 }
 
