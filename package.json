@@ -1,4 +1,16 @@
 {
+  "name": "sofia-assistant",
+  "description": "Sofia is a WhatsApp bot with AI capabilities that can help you with a lot of things.",
+  "version": "2.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": {
+    "name": "Alejandro Diaz",
+    "email": "contact@alejandrodizor.com",
+    "url": "https://alejandrodiaz.dev"
+  },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@upstash/redis": "^1.22.0",
@@ -12,5 +24,8 @@
     "openai": "^3.3.0",
     "qrcode-terminal": "^0.12.0",
     "sharp": "^0.30.7"
+  },
+  "devDependencies": {
+    "standard": "^17.1.0"
   }
 }
