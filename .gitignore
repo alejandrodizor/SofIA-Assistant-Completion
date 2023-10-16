@@ -1,9 +1,9 @@
 .env
+.DS_Store
 /node_modules/
 /node_modules
 /tokens/
 /tokens
-/temp/
-/temp
+/temp/audio/*
 /auth_info_baileys/
 /auth_info_baileys
