@@ -36,7 +36,7 @@ async function chatGPT(id, message, settings, sock) {
      */
 
     const response = await openai.createChatCompletion({
-      model: "gpt-4-16k-0613",
+      model: "gpt-4-0613",
       messages: history,
       max_tokens: max_tokens,
       functions: functions,
