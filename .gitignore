@@ -1,6 +1,5 @@
 .env
 .DS_Store
-/schemas
 /node_modules/
 /node_modules
 /tokens/
@@ -8,3 +7,4 @@
 /temp/audio/*
 /auth_info_baileys/
 /auth_info_baileys
+/data
