@@ -16,7 +16,7 @@ const numberErrorMessage = "573186312380@s.whatsapp.net";
  ** Main function
  **/
 
-async function connectToWhatsApp() {
+async function init() {
   const { state, saveCreds } = await useMultiFileAuthState("auth_info_baileys");
   const sock = makeWASocket({
     auth: state,
@@ -117,4 +117,4 @@ async function connectToWhatsApp() {
 /**
  ** Start
  */
-connectToWhatsApp();
+init();
