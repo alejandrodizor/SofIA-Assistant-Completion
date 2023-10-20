@@ -41,7 +41,7 @@ async function init() {
       );
       // reconnect if not logged out
       if (shouldReconnect) {
-        connectToWhatsApp();
+        init();
       }
     } else if (connection === "open") {
       console.log("opened connection");
