@@ -18,7 +18,6 @@ function getMessageType(messageObject) {
   } else {
     return "unknown";
   }
-
 }
 
 module.exports = { getMessageType };
