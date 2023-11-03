@@ -101,9 +101,9 @@ async function newUser(user) {
 
       const userSettings = {
         settings: {
-          token: token,
           name: "",
           birthDate: "",
+          token: token,
           interests: [],
           currentChat: 1,
           tutorial: true,
