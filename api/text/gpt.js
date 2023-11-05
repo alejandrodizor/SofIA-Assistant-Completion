@@ -4,7 +4,11 @@ const dotenv = require("dotenv");
 const envPath = path.resolve(process.cwd(), ".env");
 dotenv.config({ path: envPath });
 
-const { Configuration, OpenAIApi } = require("openai");
+//const { Configuration, OpenAIApi } = require("openai");
+
+const OpenAI = require("openai");
+
+
 const { worker } = require("../../controllers/function-worker");
 const { functions } = require("../../controllers/functions");
 const { getLastMessages, pushMessage } = require("../../controllers/db");
@@ -13,11 +17,10 @@ const { getLastMessages, pushMessage } = require("../../controllers/db");
  ** Configuration: OpenAI
  */
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const openai = new OpenAIApi(configuration);
 
 async function chatGPT(id, message, settings, sock) {
   try {
@@ -35,14 +38,19 @@ async function chatGPT(id, message, settings, sock) {
      ** OpenAI: Create Chat Completion
      */
 
-    const response = await openai.createChatCompletion({
+
+  
+
+
+    const response = await openai.chat.completions.create({
       model: "gpt-4-0613",
       messages: history,
       max_tokens: max_tokens,
       functions: functions,
     });
 
-    let response_message = response["data"]["choices"][0]["message"];
+
+    let response_message = response.choices[0].message;
 
     if (response_message.length < 1) {
       return false;
@@ -131,8 +139,7 @@ async function chatGPT(id, message, settings, sock) {
         messages: history,
       });
 
-      let second_response_message =
-        second_response["data"]["choices"][0]["message"];
+      let second_response_message = second_response.choices[0].message;
 
       return {
         is_function: false,
