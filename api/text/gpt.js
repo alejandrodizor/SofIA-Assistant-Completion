@@ -134,7 +134,7 @@ async function chatGPT(id, message, settings, sock) {
         };
       }
 
-      const second_response = await openai.createChatCompletion({
+      const second_response =  await openai.chat.completions.create({
         model: model,
         messages: history,
       });
