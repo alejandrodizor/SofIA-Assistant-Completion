@@ -1,6 +1,6 @@
 const { deleteFile } = require("../../api/audio/converter");
 const downloadAudio = require("../../api/audio/downloadMedia");
-const { textToSpeech } = require("../../api/audio/textToSpeech");
+const { textToSpeechOpenAI } = require("../../api/audio/textToSpeech");
 const transcribeAudio = require("../../api/audio/whisper");
 const { chatGPT } = require("../../api/text/gpt");
 
@@ -38,18 +38,16 @@ async function flowVoice(params, userSettings, sock) {
                   /**
                    ** Text to Speech
                    */
-                  const responeTextToSpeech = await textToSpeech(
-                    response.message,
-                    userSettings.settings.language
+
+                  const responseTextToSpeech = await textToSpeechOpenAI(
+                    response.message
                   );
 
                   /**
                    ** Send audio
                    */
                   await sock.sendMessage(id, {
-                    audio: {
-                      url: responeTextToSpeech.microsoft.audio_resource_url,
-                    },
+                    audio: responseTextToSpeech,
                     ptt: true,
                     mimetype: "audio/mpeg",
                   });

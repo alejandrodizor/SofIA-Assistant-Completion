@@ -1,33 +1,30 @@
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-const axios = require('axios');
+const fs = require("fs");
 const path = require("path");
 const dotenv = require("dotenv");
 
 const envPath = path.resolve(process.cwd(), ".env");
 dotenv.config({ path: envPath });
 
-async function textToSpeech(inputText, language='es-CO', genre='FEMALE', providers='microsoft') {
-  const resp = await fetch(
-    `https://api.edenai.run/v2/audio/text_to_speech`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.EDEN_API_KEY}`
-      },
-      body: JSON.stringify({
-        providers: providers,
-        language: language,
-        text: inputText,
-        option: genre,
-        settings: {}
-      })
-    }
-  );
+const OpenAI = require("openai");
 
-  return await resp.json();
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
+async function textToSpeechOpenAI(inputText, model="tts-1",voice = "nova", language = "mx") {
+  const mp3 = await openai.audio.speech.create({
+    model: model,
+    voice: voice,
+    input: inputText,
+    languaje: language,
+  });
+
+  const buffer = Buffer.from(await mp3.arrayBuffer());
+  //await fs.promises.writeFile(speechFile, buffer);
+
+  return buffer;
 }
 
-module.exports = { textToSpeech };
+//const speechFile = path.resolve("./speech.mp3")
 
+module.exports = { textToSpeechOpenAI };

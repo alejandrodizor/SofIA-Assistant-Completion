@@ -1,4 +1,4 @@
-const generateImage = require("../../api/image/stable-difussion");
+const generateImage = require("../../api/image/dall-e");
 
 
 function capitalizeFirstLetter(string) {
@@ -39,12 +39,14 @@ async function flowGenerateImage(
       prompt = message.substring(emojiLength).trimStart();
     }
 
-    const buffer = await generateImage(prompt);
+    //const buffer = await generateImage(prompt);
+
+    const image = await generateImage(prompt);
 
     try {
 
     await sock.sendMessage(id, {
-      image: buffer,
+      image: image,
       mimetype: "image/jpeg",
       caption: capitalizeFirstLetter(prompt)
     });

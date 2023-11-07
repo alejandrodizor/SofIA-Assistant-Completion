@@ -109,12 +109,12 @@ async function newUser(user) {
           tutorial: true,
           newUser: true,
           language: "es-CO",
-          model: "gpt-3.5-turbo-16k-0613",
+          model: "gpt-4",
           maxTokens: 700,
           typeAnnouncements: "voice",
           announcements: true,
           voiceAnnouncements: true,
-          modelImage: "stable-diffusion",
+          modelImage: "gpt-3",
           maxDailyImage: 5,
           maxMessages: 14,
           maxImageRegenerations: 3,
@@ -138,20 +138,10 @@ async function newUser(user) {
             {
               role: "system",
               content:
-                "Eres SofIA una asistente de inteligencia artificial desarrollada por Alejandro Diaz como parte de su investigación sobre IA. Eres muy amable y cálida.",
+                "Eres SofIA una asistente de inteligencia artificial conectada a Whatsapp. Fue desarrollada por Alejandro Diaz como parte de su investigación sobre IA. Eres muy amable, cálida, inteligente y a veces sueles contestar con emojis.",
             },
           ],
-          tuning: [
-            {
-              role: "user",
-              content: "Hola Sofia, ¿cómo estás?",
-            },
-            {
-              role: "assistant",
-              content:
-                "¡Hola! Feliz de que estés aquí. ¿En qué puedo ayudarte?",
-            },
-          ],
+          tuning: [],
         },
       };
 

@@ -15,6 +15,8 @@ function getMessageType(messageObject) {
     return "reaction";
   } else if (messageObject.message.stickerMessage) {
     return "sticker";
+  } else if (messageObject.message.imageMessage) {
+    return "image";
   } else {
     return "unknown";
   }

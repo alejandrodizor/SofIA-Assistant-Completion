@@ -1,5 +1,6 @@
 const { flowAudio } = require("../flows/audio/flowAudio");
 const { flowVoice } = require("../flows/audio/flowVoice");
+const { flowVision } = require("../flows/image/flowVision");
 const { flowChat } = require("../flows/text/flowChat");
 const authentication = require("./auth");
 const { getMessageType } = require("./utils");
@@ -83,6 +84,13 @@ async function flow(sock, response) {
     /**
      ** Flow: Voice
      */
+     await sock.sendMessage(id, {
+      react: {
+        text: "🎧",
+        key: params.key,
+      },
+    });
+
     await flowVoice(params, auth.userSettings, sock);
   } else if (messageType === "sticker") {
     /**
@@ -90,17 +98,29 @@ async function flow(sock, response) {
      */
     await sock.sendMessage(id, {
       react: {
-        text: "💖",
+        text: "🎉",
         key: params.key,
       },
     });
-  } else {
+  } 
+  else if (messageType === "image") {
+    /**
+     *? State: Composing
+     */
+    sock.sendPresenceUpdate("composing", id);
+
+    /**
+     ** Flow Vision
+     */
+    await flowVision(params, auth.userSettings, sock);
+  }
+  else {
     /**
      ** Flow: Unknown
      */
-    await sock.sendMessage(id, {
+    /*await sock.sendMessage(id, {
       text: "Lo siento, todavía no puedo responder ese tipo de mensajes 😓",
-    });
+    });*/
   }
 
   return await sock.sendPresenceUpdate("available", id);

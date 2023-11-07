@@ -8,7 +8,6 @@ dotenv.config({ path: envPath });
 
 const OpenAI = require("openai");
 
-
 const { worker } = require("../../controllers/function-worker");
 const { functions } = require("../../controllers/functions");
 const { getLastMessages, pushMessage } = require("../../controllers/db");
@@ -21,8 +20,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-
-async function chatGPT(id, message, settings, sock) {
+async function chatGPT(id, message, settings, sock, base64_image) {
   try {
     const model = settings.settings.model;
     const max_tokens = settings.settings.maxTokens;
@@ -38,17 +36,24 @@ async function chatGPT(id, message, settings, sock) {
      ** OpenAI: Create Chat Completion
      */
 
-
-  
-
-
     const response = await openai.chat.completions.create({
-      model: "gpt-4-1106-preview",
-      messages: history,
+      model: "gpt-4-vision-preview",
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "text", text: message },
+            {
+              type: "image_url",
+              image_url: {
+                url: `data:image/jpeg;base64,${base64_image}`,
+              },
+            },
+          ],
+        },
+      ],
       max_tokens: max_tokens,
-      functions: functions,
     });
-
 
     let response_message = response.choices[0].message;
 
@@ -134,7 +139,7 @@ async function chatGPT(id, message, settings, sock) {
         };
       }
 
-      const second_response =  await openai.chat.completions.create({
+      const second_response = await openai.chat.completions.create({
         model: model,
         messages: history,
       });

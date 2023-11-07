@@ -1,29 +1,18 @@
-require("dotenv").config();
-const axios = require("axios");
+const path = require("path");
+const dotenv = require("dotenv");
 
-async function generateImage(prompt) {
-  const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-  try {
-    const response = await axios.post(
-      "https://api.openai.com/v1/images/generations",
-      {
-        prompt: prompt,
-        n: 1,
-        size: "1024x1024",
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
-        },
-      }
-    );
+const envPath = path.resolve(process.cwd(), ".env");
+dotenv.config({ path: envPath });
 
-    return response.data.data[0].url;
-  } catch (error) {
-    console.error(`Error al generar la imagen: ${error.message}`);
-    return false;
-  }
+const OpenAI = require("openai");
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+async function generateImage(prompt, style="natural") {
+    const image = await openai.images.generate({ model: "dall-e-3", prompt: prompt, response_format: "b64_json"});
+    return Buffer.from(image.data[0].b64_json, "base64");
 }
 
 module.exports = generateImage;
