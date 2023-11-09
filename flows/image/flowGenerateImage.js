@@ -18,7 +18,7 @@ async function flowGenerateImage(
      ** Send working message
      **/
      await sock.sendMessage(id, {
-      text: "🖼️ Generando imagen....",
+      text: "👩🏼‍🎨 Creando imagen...",
     });
 
    /**
