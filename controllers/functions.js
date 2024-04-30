@@ -8,7 +8,7 @@ const functions = [
       required: [],
     },
   },
-  {
+  /*{
     name: "crear_imagen",
     description: "Cuando el usuario pide crear una imagen, crea una imagen.",
     parameters: {
@@ -21,7 +21,7 @@ const functions = [
       },
       required: ["description"],
     },
-  },
+  },*/
   {
     name: "recordar_nombre",
     description:

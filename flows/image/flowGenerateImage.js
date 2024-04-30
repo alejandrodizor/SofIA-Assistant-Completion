@@ -17,6 +17,8 @@ async function flowGenerateImage(
     /**
      ** Send working message
      **/
+
+     return "Las imagenes están desactivadas por el momento.";
      await sock.sendMessage(id, {
       text: "👩🏼‍🎨 Creando imagen...",
     });
@@ -39,9 +41,8 @@ async function flowGenerateImage(
       prompt = message.substring(emojiLength).trimStart();
     }
 
-    //const buffer = await generateImage(prompt);
-
-    const image = await generateImage(prompt);
+    //TODO: quitar esto para activar nuevamente la creacion de imagenes
+    //const image = await generateImage(prompt);
 
     try {
 
